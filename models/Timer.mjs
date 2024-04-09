@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Event from "./Event.mjs";
 
 const TimerSchema = new mongoose.Schema({
    title: {
@@ -14,6 +15,10 @@ const TimerSchema = new mongoose.Schema({
    },
    frequency: {
       type: Number,
+   },
+   eventId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Event",
    },
    createdAt: {
      type: Date,

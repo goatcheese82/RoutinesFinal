@@ -5,8 +5,7 @@ import Event from '../models/Event.mjs';
 
 const getAllEvents = async (req, res) => {
    try {
-      const events = await Event.find({ status: 'public' })
-         .populate('user')
+      const events = await Event.find({})
          .sort({ createdAt: 'desc' })
          .lean()
 
@@ -37,16 +36,16 @@ const getEventById = async (req, res) => {
 const createEvent = async (req, res) => {
    try {
       console.log(req.body);
-      let event = await Event.findOne({title: req.title});
+      let event = await Event.findOne({ title: req.title });
       if (event) {
          send("This event already exists").status("400");
       } else {
-      event = new Event({
-         title: req.body.title,
-         image: req.body.image,
-      });
-      await event.save();
-      res.redirect('/events')
+         event = new Event({
+            title: req.body.title,
+            image: req.body.image,
+         });
+         await event.save();
+         res.redirect('/events')
       }
    } catch (err) {
       console.error(err);
