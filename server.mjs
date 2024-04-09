@@ -9,6 +9,7 @@ import router from './routes/index.mjs';
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.json" assert { type: "json" };
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import UserModel from './models/User.mjs';
 
 
 dotenv.config()
@@ -22,14 +23,14 @@ mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopol
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Define MongoDB Schema and Model
-const userSchema = new mongoose.Schema({
-    googleId: String,
-    displayName: String,
-    email: String
-});
+// // Define MongoDB Schema and Model
+// const userSchema = new mongoose.Schema({
+//     googleId: String,
+//     displayName: String,
+//     email: String
+// });
 
-const User = mongoose.model('User', userSchema);
+const User = UserModel;
 
 // Middleware for parsing JSON
 app.use(express.json());
@@ -59,7 +60,10 @@ passport.use(new GoogleStrategy({
             user = new User({
                 googleId: profile.id,
                 displayName: profile.displayName,
-                email: profile.emails[0].value
+                email: profile.emails[0].value,
+                firstName: profile.name.givenName,
+                lastName: profile.name.familyName,
+                image: profile.photos[0].value,
             });
             await user.save();
             return done(null, user);

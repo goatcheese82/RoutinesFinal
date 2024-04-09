@@ -11,7 +11,7 @@ const getAllEvents = async (req, res) => {
          .lean()
 
       res.send(events).status(200);
-   } catch {
+   } catch (err) {
       console.error(err);
       res.status(500).send(err);
    }
@@ -36,12 +36,21 @@ const getEventById = async (req, res) => {
 
 const createEvent = async (req, res) => {
    try {
-   //   req.body.user = req.user.id
-     await Event.create(req.body)
-     res.redirect('/events')
+      console.log(req.body);
+      let event = await Event.findOne({title: req.title});
+      if (event) {
+         send("This event already exists").status("400");
+      } else {
+      event = new Event({
+         title: req.body.title,
+         image: req.body.image,
+      });
+      await event.save();
+      res.redirect('/events')
+      }
    } catch (err) {
-     console.error(err);
-     res.send('There was an error creating your event.');
+      console.error(err);
+      res.send('There was an error creating your event.');
    }
 };
 
