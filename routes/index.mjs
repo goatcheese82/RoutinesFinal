@@ -37,7 +37,7 @@ router.use('/auth', /*#swagger.tags=['Auth']*/ auth);
 
 
 /*** Users */
-router.use('/users', /*#swagger.tags=['Users']*/ users);
+router.use('/users', authHandler.checkAuthentication, authHandler.ensureAuthentication, /*#swagger.tags=['Users']*/ users);
 
 /*** Events */
 router.use('/events', authHandler.checkAuthentication, authHandler.ensureAuthentication, /*#swagger.tags=['Events']*/ events);
