@@ -28,6 +28,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 //     email: String
 // });
 
+const User = UserModel;
 
 // Middleware for parsing JSON
 app.use(express.json());
