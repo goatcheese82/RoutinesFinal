@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.mjs",
+  "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=production node handlers/swagger.mjs",
     "dev": "cross-env NODE_ENV=development nodemon server.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha __tests__/**/*.mjs"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +27,13 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "chai": "^5.1.0",
+    "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
-    "nodemon": "^3.1.0"
+    "mocha": "^10.4.0",
+    "nodemon": "^3.1.0",
+    "passport-mock": "^0.0.3",
+    "sinon": "^17.0.1",
+    "supertest": "^6.3.4"
   }
 }

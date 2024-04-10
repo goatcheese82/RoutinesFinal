@@ -6,8 +6,6 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import router from './routes/index.mjs';
-import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.json" assert { type: "json" };
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import UserModel from './models/User.mjs';
 
@@ -30,7 +28,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 //     email: String
 // });
 
-const User = UserModel;
 
 // Middleware for parsing JSON
 app.use(express.json());
@@ -94,3 +91,5 @@ app.use('/', router);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+export default app
